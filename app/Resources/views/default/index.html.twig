@@ -1,0 +1,63 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<h1>Bienvenue {{username}}</h1>
+<h3><b>Afficher Information</b></h3>
+<p>Age: {{age}}</p>
+<p>Race: {{race}}</p>
+<p>Famille: {{famille}}</p>
+<p>Nourriture: {{nourriture}}</p>
+
+<h3><b>Enregistrer/Modifier les infomations</b></h3>
+<form method="POST" action="/information">
+    <p>Age <input type="text" name="age"></input></p>
+    <p>Race <input type="text" name="race"></input></p>
+    <p>Famille <input type="text" name="famille"></input></p>
+    <p>Nourriture <input type="text" name="nourriture"></input></p>
+    <input type="submit" value="Enregistrer">
+</form>
+
+<h3><b>List friend</b></h3>
+<table>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Race</th>
+    <th>Famille</th>
+    <th>Nourriture</th>
+    <th></th>
+    {% for friend in friends %}
+        <tr>
+            <td>
+                {{friend.username}}
+            </td>
+            <td>
+                {{friend.age}}
+            </td>
+            <td>
+                {{friend.race}}
+            </td>
+            <td>
+                {{friend.famille}}
+            </td>
+            <td>
+                {{friend.nourriture}}
+            </td>
+            <td>
+                <a href="{{path('delete_friend', {'id_user2': friend.user2}) }}">Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+<h3><b>Si vous voulez ajouter un(e) ami(e)</b></h3>
+<form method="POST" action="/addFriend">
+    <select name="friend">
+        {% for user in users %}
+            <option name="{{user.id}}" value="{{user.id}}">{{user.username}}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Ajouter">
+</form>
+
+{% endblock %}
+
